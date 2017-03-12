@@ -3,7 +3,11 @@ TEMPLATE = app
 QT += qml quick
 CONFIG += c++11
 
-SOURCES += main.cpp
+SOURCES += src/main.cpp \
+    src/furniture.cpp \
+    src/building.cpp \
+    src/globals.cpp \
+    src/broker.cpp
 
 RESOURCES += qml.qrc
 
@@ -28,3 +32,18 @@ DEFINES += QT_DEPRECATED_WARNINGS
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    qml/MainForm.ui.qml \
+    qml/main.qml \
+    qml/Block.qml \
+    singleton/qmldir \
+    singleton/GlobalsQML.qml \
+    Res/me.jpg \
+    Res/ns.jpg
+
+HEADERS += \
+    src/furniture.h \
+    src/building.h \
+    src/globals.h \
+    src/broker.h
