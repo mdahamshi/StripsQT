@@ -25,7 +25,6 @@ public:
     static Broker *getInstance(){
         if (! m_Instance)
             return new Broker();
-
         return m_Instance;
     }
     Broker();

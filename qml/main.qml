@@ -22,6 +22,7 @@ Window {
                 id: stackRec
                 x: 8
                 y: 8
+
                 width: 200
                 height: parent.height - 16
                 color: "#efefef"
@@ -34,7 +35,7 @@ Window {
                     font.pointSize: 14
                     textFormat: Text.StyledText
                     anchors.left: stackRec.right
-                    anchors.leftMargin: 10
+                    anchors.leftMargin: stackRec.width / 2
 
                     horizontalAlignment: Text.AlignJustify
                     text:"<h1>Current state</h1><br/>"
@@ -44,49 +45,22 @@ Window {
                     id: desired
                     font.pointSize: 14
                     textFormat: Text.StyledText
-                    anchors.left: desiredGrid.left
+                    anchors.left: desiredBox.left
+                    anchors.leftMargin: stackRec.width / 2
                     horizontalAlignment: Text.AlignJustify
                     text:"<h1>Desired state</h1><br/>"
                 }
 
 
-            Grid{
-                id: currentGrid
-                rows: MyScripts.maxRow; columns: MyScripts.maxColumn
-                width: MyScripts.gridWidth
-                height: MyScripts.gridHeight
-                anchors.left: stackRec.right
-                anchors.leftMargin: 10
-                anchors.top: current.bottom
-                anchors.topMargin: 30
-
-                Repeater{
-                    model:myBroker.getBoardSize()
-                    delegate: Block{
-
-                    }
-                }
-
-            }
-            Grid{
-                id: desiredGrid
-                rows: MyScripts.maxRow; columns: MyScripts.maxColumn
-                width: MyScripts.gridWidth
-                height: MyScripts.gridHeight
-                anchors.right:  parent.right
-                anchors.rightMargin:  10
-                anchors.top: desired.bottom
-                anchors.topMargin: 30
-
-                Repeater{
-                    model:myBroker.getBoardSize()
-                    delegate: Block{
-
-                    }
-                }
-
+            CurrentGrid{
+                id: currentBox
             }
 
+            DesiredGrid{
+                id: desiredBox
+            }
+
+            //Buttons
             MyButton{
                 id: help
 
@@ -95,31 +69,30 @@ Window {
                 anchors.leftMargin: 20
                 anchors.margins: 5
                 width: 100;height: 50
-                color: "lightblue"
                 customText: "Help"
+                toolTipText: "Click to display Help "
 
                 onButtonClicked: {
 
                     myHelp.visible = true;
                 }
-
-                toolTipText: "Click to display Help "
              }
+
             MyButton{
                 id: reset
                 width: 100
                 height: 50
                 customText: "Reset"
-                color: "lightblue"
-
                 anchors.right: begin.left
                 anchors.rightMargin: 20
                 anchors.bottom: parent.bottom
                 anchors.margins: 5
                 toolTipText: "Click to reset board"
+
                 onButtonClicked: {
                     myBroker.resetBoard();
-
+                    mainFrame.resetVars();
+                    status.text = "Board reseted !"
                 }
             }
 
@@ -128,34 +101,30 @@ Window {
                 width: 100
                 height: 50
                 customText: "<b>Begin</b>"
-                color: "lightblue"
-
                 x: (parent.width ) /2 + width / 2
                 anchors.bottom: parent.bottom
                 anchors.margins: 5
                 toolTipText: "Click to begin simulation"
+
                 onButtonClicked: {
                     myHelp.visible = true;
                 }
             }
+
             MyButton{
                 id: quit
-
                 anchors.bottom: parent.bottom
                 anchors.right: parent.right
-
                 anchors.margins: 5
                 width: 40;height: 40
                 color: "red"
                 customText: "X"
                 fontSize: 20
+                toolTipText:"Click to Quit"
 
                 onButtonClicked: {
-
                        Qt.quit();
                 }
-
-                toolTipText:"Click to Quit"
             }
 
             MyButton{
@@ -167,10 +136,25 @@ Window {
                 color: "green"
                 customText: "?"
                 fontSize: 20
-                onButtonClicked: myAbout.visible = true
                 toolTipText: "Click to show About"
 
+                onButtonClicked: {
+                    myAbout.visible = true
+                }
              }
+
+            //status text
+            Text {
+                id: status
+                text: qsTr("Hello !<br> Click Help for instructions")
+                horizontalAlignment: Text.AlignHCenter
+                font.pointSize: 20
+                color: "black"
+                visible: true
+                anchors.bottom: begin.top
+                anchors.bottomMargin: 10
+                 x: (parent.width -width ) /2 + stackRec.width / 2
+            }
 
             //dialogs
             About{
@@ -180,6 +164,7 @@ Window {
                 id:myHelp
             }
 
+            //Connections
             Connections{
                 target: myBroker
                 onUpdateBuilding:{
@@ -188,8 +173,15 @@ Window {
 
                 }
             }
+            //functions
+            function resetVars(){
+                currentBox.colorIndex = 0;
+                currentBox.addedNum = 0;
+            }
 
             Component.onCompleted: {
+                currentBox.enabled = true;
+                desiredBox.enabled = true;
                 console.log(myBroker.getBoardSize());
                 MyScripts.updateBoard();
 

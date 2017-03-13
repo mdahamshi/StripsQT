@@ -8,11 +8,10 @@ Broker::Broker(QObject *parent) : QObject(parent)
 }
 Broker::Broker()
 {
-#ifdef _MYDEB_
-    std::cout<<"in Broker constructor.."<<std::endl;
-#endif
     buildingBoard.initializeBoard();
+#ifdef _MYDEB_
     buildingBoard.printBoard();
+#endif
 
 }
 

@@ -10,5 +10,7 @@
         <file>qml/About.qml</file>
         <file>Res/ns.jpg</file>
         <file>Res/me.jpg</file>
+        <file>qml/CurrentGrid.qml</file>
+        <file>qml/DesiredGrid.qml</file>
     </qresource>
 </RCC>
