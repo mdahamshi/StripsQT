@@ -7,6 +7,7 @@ Item {
 
     property string colorKey
     property int myId: -1
+    property var defaultParent: parent
 
     MouseArea {
             id: mouseArea
@@ -18,10 +19,18 @@ Item {
 
             onReleased: {
 
+                if(tile.Drag.target !== null){
+                    var newX = tile.Drag.target.x;
+                    var newY = tile.Drag.target.y;
+                    if(defaultParent.checkDrag(newX ,newY ,width ,height ,myId)){
+                        parent = tile.Drag.target !== null ? tile.Drag.target.parent.parent : root;
+                        root.x = newX;
+                        root.y = newY;
+                        x = newX;
+                        y = newY;
+                    }
 
-                parent = tile.Drag.target !== null ? tile.Drag.target.parent : root
-                x =tile.Drag.target !== null ? tile.Drag.target.x :0
-                y =tile.Drag.target !== null ? tile.Drag.target.y : 0
+                }
 
                 console.log("x,y ",x,y,parent,myId);
             }

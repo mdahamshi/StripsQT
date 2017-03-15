@@ -36,6 +36,7 @@ public:
     Q_INVOKABLE void resetBoard();
     Q_INVOKABLE void addObject(int firstX, int firstY,int secX ,int secY,int index , int whichBoard);
     Q_INVOKABLE void copyBoard();
+    Q_INVOKABLE void printBoard(){desiredBoard.printBoard();}
 signals:
     void updateBuilding();
 

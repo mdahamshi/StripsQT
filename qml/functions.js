@@ -42,3 +42,9 @@ function getAcolor(c){
     return colorQueue[c];
 }
 
+function toBlockCor(x,y){
+   return Qt.point(Math.floor(x / MyScripts.blockSize) ,Math.floor(y / MyScripts.blockSize));
+}
+function toBoardCor(point){
+    return Qt.point(point.y,point.x);
+}

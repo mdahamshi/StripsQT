@@ -129,7 +129,7 @@ Window {
                 toolTipText: "Click to begin simulation"
 
                 onButtonClicked: {
-                    myHelp.visible = true;
+                    parent.beginTheFun();
                 }
             }
 
@@ -201,6 +201,12 @@ Window {
                 desiredBox.resetGame();
                 setDesired.enabled = true;
                 setDesired.opacity = 1;
+                desiredBox.enabled = true;
+            }
+            function beginTheFun(){
+                desiredBox.addObjectsToBackend();
+                desiredBox.enabled = false;
+                currentBox.opacity = 1;
             }
 
             Component.onCompleted: {
