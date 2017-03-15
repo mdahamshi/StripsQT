@@ -3,7 +3,7 @@
 
 
 
-<h2>Screenshots:</h2>
+<br/><h2>Screenshots:</h2>
 <br/>
 ![alt tag](https://github.com/mdahamshi/StripsQT/blob/master/screenshots/1.png)
 ![alt tag](https://github.com/mdahamshi/StripsQT/blob/master/screenshots/2.png)
