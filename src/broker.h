@@ -16,6 +16,7 @@ class Broker: public  QObject
 private:
     static  Broker *  m_Instance;
     Building buildingBoard;
+    Building desiredBoard;
 
 public:
 
@@ -30,9 +31,11 @@ public:
     Broker();
     Broker(QObject *parent);
     Q_INVOKABLE void test(){std::cout<<"in test function";emit updateBuilding();}
-    Q_INVOKABLE int getStatus(int i ,int j);
+    Q_INVOKABLE int getStatus(int i ,int j,int);
     Q_INVOKABLE int getBoardSize();
     Q_INVOKABLE void resetBoard();
+    Q_INVOKABLE void addObject(int firstX, int firstY,int secX ,int secY,int index , int whichBoard);
+    Q_INVOKABLE void copyBoard();
 signals:
     void updateBuilding();
 

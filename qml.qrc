@@ -12,5 +12,7 @@
         <file>Res/me.jpg</file>
         <file>qml/CurrentGrid.qml</file>
         <file>qml/DesiredGrid.qml</file>
+        <file>qml/DropBlock.qml</file>
+        <file>qml/NewBlock.qml</file>
     </qresource>
 </RCC>

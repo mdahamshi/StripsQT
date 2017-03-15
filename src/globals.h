@@ -7,6 +7,33 @@
 #define HOR_WALLS 3
 #define TOTAL_WIDTH (BUILD_WIDTH + HOR_WALLS)
 #define TOTAL_HEIGHT (BUILD_HEIGHT + VER_WALLS)
+#define _MYDEB_
+typedef struct myPoint {
+    int x;
+    int y;
+    myPoint(){
+
+    }
+    myPoint(int a, int b){
+        x = a;
+        y = b;
+    }
+}Point;
+
+typedef struct myObject{
+    Point first;
+    Point second;
+    int colorIndex;
+    myObject(){
+
+    }
+    myObject(Point a ,Point b ,int c){
+        first = a;
+        second = b;
+        colorIndex = c;
+    }
+}Object;
+
 class Globals
 {
 public:
@@ -24,6 +51,10 @@ public:
     enum{
         HOR,
         VER
+    };
+    enum{
+        CURRENT_BOARD,
+        DESIRED_BOARD
     };
     Globals();
 };

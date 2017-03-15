@@ -15,6 +15,8 @@ QtObject {
     property int full: 2
     property string wallColor: "black"
     property string freeColor: "#efefef"
+    property int currentBoard: 0
+    property int desiredBoard: 1
 
 
         property string blankDir: "Res/blank2.png"

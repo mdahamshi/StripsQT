@@ -45,7 +45,27 @@ void Building::initializeBoard()
     addDoor(6 ,3 ,4 ,Globals::HOR);
     addDoor(2 ,9 ,3 ,Globals::VER);
     addDoor(8 ,9 ,5 ,Globals::VER);
+    objectsList.clear();
 
+}
+
+void Building::addObject(int firstX, int firstY, int secX, int secY ,int index)
+{
+    int incX = firstX - secX > 0 ? -1 : 1 ;
+    int incY = firstY - secY > 0 ? -1 : 1 ;
+    for (int i = firstX ;i != secX + incX ;i+=incX)
+        for (int j = firstY ;j != secY + incY ;j+=incY){
+            if(board[i][j] == Globals::FREE)
+                board[i][j] = index;
+            else
+                std::cout<<"WARNING ! adding object to nonempty location !"<<std::endl;
+        }
+    objectsList.push_back(Object(Point(firstX,firstY) ,Point(secX ,secY) ,index));
+
+#ifdef _MYDEB_
+
+    printBoard();
+#endif
 
 }
 
@@ -91,5 +111,5 @@ void Building::printBoard()
         }
         cout<< endl;
     }
-//    cout<<endl;
+    cout<<endl;
 }

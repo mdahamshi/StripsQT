@@ -10,7 +10,7 @@ Window {
     height: 700
     minimumWidth: 1200
     minimumHeight: 600
-    title: qsTr("Strips , Professor Lari Edition.")
+    title: qsTr("STRIPS , Professor Lari Edition.")
 
     Item {
         anchors.fill: parent
@@ -91,8 +91,30 @@ Window {
 
                 onButtonClicked: {
                     myBroker.resetBoard();
-                    mainFrame.resetVars();
+                    reset.parent.resetVars();
                     status.text = "Board reseted !"
+                }
+            }
+            MyButton{
+                id: setDesired
+                width: 130
+                height: 50
+                customText: "Set Desired ->"
+                anchors.top: currentBox.bottom
+                x:begin.x - 10
+                anchors.margins: 5
+                toolTipText: "Click to set desired state"
+
+                onButtonClicked: {
+                    if (currentBox.objects.length !== 0){
+                        currentBox.addObjectsToBoard();
+                        status.text = "Arrange desired state !";
+                        setDesired.enabled = false;
+                        opacity = 0.5;
+
+                    }
+                    else
+                        status.text = "Add some Objects !"
                 }
             }
 
@@ -168,21 +190,23 @@ Window {
             Connections{
                 target: myBroker
                 onUpdateBuilding:{
-                    console.log("in update building..");
+//                    console.log("in update building..");
                     MyScripts.updateBoard();
 
                 }
             }
             //functions
             function resetVars(){
-                currentBox.colorIndex = 0;
-                currentBox.addedNum = 0;
+                currentBox.resetGame();
+                desiredBox.resetGame();
+                setDesired.enabled = true;
+                setDesired.opacity = 1;
             }
 
             Component.onCompleted: {
                 currentBox.enabled = true;
                 desiredBox.enabled = true;
-                console.log(myBroker.getBoardSize());
+//                console.log(myBroker.getBoardSize());
                 MyScripts.updateBoard();
 
             }
