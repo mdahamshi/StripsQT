@@ -6,7 +6,6 @@ import QtQuick 2.7
 
 Dialog{
     id: help
-    visible: false
     title: "Help"
     width: 640
     height: 640
@@ -72,7 +71,19 @@ Dialog{
             font.pointSize: 13
             anchors.centerIn: parent
             wrapMode: Text.WordWrap
-            text: qsTr("");
+            text: qsTr("<h1>How to use:</h1><br>
+                <ol>
+                    <li>Begin by adding the objects to the current state - click and drag.</li><p></p>
+                    <br/><img src=\"qrc:/Res/h1.png\"></img><br/>
+                     <li>When you finish adding all the items, click on \"Set Desired->\" button.</li>
+                   <br/> <br/><img src=\"qrc:/Res/h2.png\"></img><br/>
+                    <li>Now arrange the desired state as you like - click and drag.</li> <br/>
+                   <br/> <br/><img src=\"qrc:/Res/h3.png\"></img><br/>
+                     <li>After finishing the arrange operation, Click on begin to start the simulator.</li>
+               <br/>     <br/><img src=\"qrc:/Res/h4.png\"></img><br/>
+                       </ol><br/>
+                        <b>** At any time, you can click the \"reset\" button to clean the two boards.<p></p>
+                        </br><br/><br/><br/></b><p></p>");
 
         }
 

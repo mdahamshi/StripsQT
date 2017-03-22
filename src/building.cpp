@@ -45,12 +45,14 @@ void Building::initializeBoard()
     addDoor(6 ,3 ,4 ,Globals::HOR);
     addDoor(2 ,9 ,3 ,Globals::VER);
     addDoor(8 ,9 ,5 ,Globals::VER);
-    objectsList.clear();
+    objectsMap.clear();
+
 
 }
 
 void Building::addObject(int firstX, int firstY, int secX, int secY ,int index)
 {
+    Point topLeft,downRight;
     int incX = firstX - secX > 0 ? -1 : 1 ;
     int incY = firstY - secY > 0 ? -1 : 1 ;
     for (int i = firstX ;i != secX + incX ;i+=incX)
@@ -60,13 +62,37 @@ void Building::addObject(int firstX, int firstY, int secX, int secY ,int index)
             else
                 std::cout<<"WARNING ! adding object to nonempty location !"<<std::endl;
         }
-    objectsList.push_back(Object(Point(firstX,firstY) ,Point(secX ,secY) ,index));
 
+    topLeft.x = firstX < secX ? firstX : secX;
+    topLeft.y = firstY < secY ? firstY : secY;
+    downRight.x = firstX > secX ? firstX : secX;
+    downRight.y = firstY > secY ? firstY : secY;
+    objectsMap[index] = Furniture(topLeft ,downRight ,index);
 #ifdef _MYDEB_
 
     printBoard();
 #endif
 
+}
+void Building::printObjects()
+{
+//    list<Furniture>::iterator iter = objectsList.begin();
+//    for(; iter != objectsList.end() ;iter++)
+//        (*iter).print();
+//    for(int i =0 ;i < objectsMap.size() ;i++)
+//        objectsMap[i+3].print();
+
+    for(map<int,Furniture>::iterator itr = objectsMap.begin(); itr != objectsMap.end() ;itr++)
+        (*itr).second.print();
+}
+
+int Building::getObjectNum()
+{
+    return objectsMap.size();
+}
+void Building::setTatus(int i, int j, int index)
+{
+    board[i][j] = index;
 }
 
 void Building::addDoor(int row, int col, int size ,int direction)
@@ -112,4 +138,5 @@ void Building::printBoard()
         cout<< endl;
     }
     cout<<endl;
+    printObjects();
 }

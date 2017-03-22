@@ -32,7 +32,7 @@ Item {
 
                 }
 
-                console.log("x,y ",x,y,parent,myId);
+//                console.log("x,y ",x,y,parent,myId);
             }
 
             Rectangle {

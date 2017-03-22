@@ -17,7 +17,7 @@ Item {
     property var addedObjects: []
     property var myDynamicComp: Qt.createComponent("NewBlock.qml")
     property var newObjects: []
-
+    signal setTheStatus(var msg);
 
 
 
@@ -84,22 +84,27 @@ Item {
                         && (hisFirstCor.x < mySecX || hisSecCor.x < mySecX || hisThirdCor.x < mySecX || hisForthCor.x < mySecX)
                         && (hisFirstCor.y > y || hisSecCor.y > y || hisThirdCor.y > y || hisForthCor.y > y)
                         && (hisFirstCor.y < mySecY || hisSecCor.y < mySecY || hisThirdCor.y < mySecY || hisForthCor.y < mySecY)
-                        )
+                        ){
+                    setTheStatus("Wrong Move !");
                     return false;
+                }
+
+
 
             }
         }
         //checking if there is a wall before dropping
        var firstPoint =  MyScripts.toBoardCor(MyScripts.toBlockCor(x,y));
        var steps =  MyScripts.toBoardCor(MyScripts.toBlockCor(myWidth,myHeight));
-       console.log("check walls x,y,stepx,stepy ",firstPoint,steps);
+//            console.log("check walls x,y,stepx,stepy ",firstPoint,steps);
        for (var i = firstPoint.x ;i <steps.x+firstPoint.x ;i++)
            for (var j = firstPoint.y ;j < steps.y+firstPoint.y  ;j++)
                if(myBroker.getStatus(i,j,MyGlobals.currentBoard) === MyGlobals.wall){
-                   console.log("wall detected at ",i,j);
+//                        console.log("wall detected at ",i,j);
+                   setTheStatus("Wrong Move !");
                    return false;
                }
-
+        setTheStatus("After finishing<br/>Click begin !")
         return true;
     }
 

@@ -7,7 +7,14 @@ SOURCES += src/main.cpp \
     src/furniture.cpp \
     src/building.cpp \
     src/globals.cpp \
-    src/broker.cpp
+    src/broker.cpp \
+    src/predicate.cpp \
+    src/genpred.cpp \
+    src/action.cpp \
+    src/solver.cpp \
+    src/point.cpp \
+    src/functions.cpp \
+    src/stacknode.cpp
 
 RESOURCES += qml.qrc
 
@@ -46,4 +53,11 @@ HEADERS += \
     src/furniture.h \
     src/building.h \
     src/globals.h \
-    src/broker.h
+    src/broker.h \
+    src/predicate.h \
+    src/genpred.h \
+    src/action.h \
+    src/solver.h \
+    src/point.h \
+    src/functions.h \
+    src/stacknode.h

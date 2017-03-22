@@ -14,5 +14,10 @@
         <file>qml/DesiredGrid.qml</file>
         <file>qml/DropBlock.qml</file>
         <file>qml/NewBlock.qml</file>
+        <file>Res/h4.png</file>
+        <file>Res/h3.png</file>
+        <file>Res/h2.png</file>
+        <file>Res/h1.png</file>
+        <file>qml/Stack.qml</file>
     </qresource>
 </RCC>

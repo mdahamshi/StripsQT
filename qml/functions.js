@@ -7,6 +7,7 @@ var colorQueue = ["blue" ,"green" ,"red" ,"yellow" ,"#810512" ,"#888801","lightb
 var colorIndex = 0;
 var objects = [];
 var lastColor = "lightpink";
+var maxObjects = colorQueue.length;
 function index(column, row) {
     return column + (row * maxColumn);
 }
@@ -38,8 +39,9 @@ function updateCurrentBoard() {
     }
 }
 
+
 function getAcolor(c){
-    return colorQueue[c];
+    return colorQueue[c%maxObjects];
 }
 
 function toBlockCor(x,y){

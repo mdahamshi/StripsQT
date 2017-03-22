@@ -8,7 +8,7 @@ Item {
     enabled: false
     width: MyScripts.gridWidth
     height: MyScripts.gridHeight
-    anchors.left: stackRec.right
+    anchors.left: stripsStack.right
     anchors.leftMargin: 10
     anchors.top: current.bottom
     anchors.topMargin: 30
@@ -18,6 +18,7 @@ Item {
     property var lastHoverPoint:Qt.point(-1,-1)
     property int colorIndex: 0
     property var objects: []
+    signal setTheStatus(var msg);
 
     Grid{
         id: hisGrid
@@ -35,6 +36,7 @@ Item {
         anchors.fill: parent
         acceptedButtons: Qt.RightButton | Qt.LeftButton
         onPressed: {
+
 //            console.log("current mouse area pressed" + mouse.x+","+mouse.y)
             if(mouse.button & Qt.LeftButton){
                 pressedPoint = toBlockCor(mouse.x,mouse.y);
@@ -50,14 +52,14 @@ Item {
                 releasedPoint = toBlockCor(mouse.x,mouse.y);
                 if(!legalObject(pressedPoint,releasedPoint)){
                     clearLastHovered();
+                    setTheStatus("Wrong Move !")
                 }
                 else{
                     setNewObjectToFull(pressedPoint,releasedPoint);
                     objects.push([pressedPoint,releasedPoint,colorIndex+3]);
+                    setTheStatus("After finishing<br/>Click on \"Set Desired->\"");
 //                    console.log(objects)
-                    if (MyScripts.getAcolor(colorIndex) === MyScripts.lastColor)
-                        colorIndex = 0;
-                    else
+
                         colorIndex += 1;
                 }
 
@@ -67,7 +69,6 @@ Item {
 
             }
 
-//            setTempColor(releasedPoint.x,releasedPoint.y);
 //            console.log("pressed: "+pressedPoint.x +","+pressedPoint.y + " released: "+ releasedPoint.x + ","+ releasedPoint.y)
         }
 

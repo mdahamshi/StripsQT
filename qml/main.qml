@@ -18,15 +18,8 @@ Window {
 
 
 
-            Rectangle {
-                id: stackRec
-                x: 8
-                y: 8
-
-                width: 200
-                height: parent.height - 16
-                color: "#efefef"
-
+            Stack{
+                id:stripsStack
             }
 
 
@@ -34,8 +27,8 @@ Window {
                     id: current
                     font.pointSize: 14
                     textFormat: Text.StyledText
-                    anchors.left: stackRec.right
-                    anchors.leftMargin: stackRec.width / 2
+                    anchors.left: stripsStack.right
+                    anchors.leftMargin: stripsStack.width / 2
 
                     horizontalAlignment: Text.AlignJustify
                     text:"<h1>Current state</h1><br/>"
@@ -46,7 +39,7 @@ Window {
                     font.pointSize: 14
                     textFormat: Text.StyledText
                     anchors.left: desiredBox.left
-                    anchors.leftMargin: stackRec.width / 2
+                    anchors.leftMargin: stripsStack.width / 2
                     horizontalAlignment: Text.AlignJustify
                     text:"<h1>Desired state</h1><br/>"
                 }
@@ -129,7 +122,10 @@ Window {
                 toolTipText: "Click to begin simulation"
 
                 onButtonClicked: {
-                    parent.beginTheFun();
+                    if(setDesired.enabled === true)
+                        status.text = "Add some Objects !"
+                    else
+                        parent.beginTheFun();
                 }
             }
 
@@ -137,7 +133,7 @@ Window {
                 id: quit
                 anchors.bottom: parent.bottom
                 anchors.right: parent.right
-                anchors.margins: 5
+                anchors.margins: 8
                 width: 40;height: 40
                 color: "red"
                 customText: "X"
@@ -145,6 +141,7 @@ Window {
                 toolTipText:"Click to Quit"
 
                 onButtonClicked: {
+                    myBroker.setResetReq();
                        Qt.quit();
                 }
             }
@@ -152,8 +149,8 @@ Window {
             MyButton{
                 id: about
                 anchors.bottom: parent.bottom
-                anchors.left: stackRec.right
-                anchors.margins: 5
+                anchors.left: stripsStack.right
+                anchors.margins: 8
                 width: 40;height: 40
                 color: "green"
                 customText: "?"
@@ -165,17 +162,18 @@ Window {
                 }
              }
 
+
             //status text
             Text {
                 id: status
-                text: qsTr("Hello !<br> Click Help for instructions")
+                text: qsTr("Hello !<br>Begin with adding some objects to current state")
                 horizontalAlignment: Text.AlignHCenter
                 font.pointSize: 20
                 color: "black"
                 visible: true
                 anchors.bottom: begin.top
                 anchors.bottomMargin: 10
-                 x: (parent.width -width ) /2 + stackRec.width / 2
+                 x: (parent.width -width ) /2 + stripsStack.width / 2
             }
 
             //dialogs
@@ -184,6 +182,7 @@ Window {
             }
             Help{
                 id:myHelp
+                visible: false
             }
 
             //Connections
@@ -194,7 +193,28 @@ Window {
                     MyScripts.updateBoard();
 
                 }
+                onResetAll:{
+                    resetVars();
+                }
+                onUpdateStack:{
+                    stripsStack.theText = str;
+
+                }
             }
+            Connections{
+                target: currentBox
+                onSetTheStatus:{
+                    status.text = msg;
+                }
+            }
+            Connections{
+                target: desiredBox
+                onSetTheStatus:{
+                    status.text = msg;
+                }
+            }
+
+
             //functions
             function resetVars(){
                 currentBox.resetGame();
@@ -202,11 +222,17 @@ Window {
                 setDesired.enabled = true;
                 setDesired.opacity = 1;
                 desiredBox.enabled = true;
+                begin.enabled = true;
+                begin.opacity = 1;
             }
             function beginTheFun(){
+                status.text = "Here we Go !<br/>We are now stripping things for you :)"
                 desiredBox.addObjectsToBackend();
                 desiredBox.enabled = false;
                 currentBox.opacity = 1;
+                begin.enabled = false;
+                begin.opacity = 0.5;
+                myBroker.beginSolving();
             }
 
             Component.onCompleted: {
