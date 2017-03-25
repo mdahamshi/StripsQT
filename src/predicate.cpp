@@ -1,5 +1,4 @@
 #include "predicate.h"
-Building &Predicate::theBuilding = Broker::getInstance()->buildingBoard;
 Predicate::Predicate()
 {
 
@@ -17,9 +16,9 @@ bool Predicate::operator ==(const Predicate &source)
 }
 bool Predicate::satisfied()
 {
-    if(xpos < 2 || xpos > TOTAL_HEIGHT-1 || ypos < 2 || ypos > TOTAL_WIDTH -1 )
+    if(xpos < 1 || xpos >= TOTAL_HEIGHT-1 || ypos < 1 || ypos >= TOTAL_WIDTH -1 )
         return false;
-    return (theBuilding.getStatus(xpos,ypos) == objID);
+    return (buildingBoard.getStatus(xpos,ypos) == objID);
 }
 
 Predicate::Predicate(const Predicate &source)

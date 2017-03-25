@@ -30,14 +30,18 @@
 #define _MYDEB_
 
 extern bool resetRequest; //global variable to cancel work in case reset button pressed
-
+extern bool pause;
 
 
 
 class Globals
 {
 public:
-
+    enum{
+        NOSOL,
+        SOLVED,
+        RESET
+    };
     enum{
         WALL,
         FREE,

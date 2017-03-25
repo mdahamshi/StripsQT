@@ -1,5 +1,6 @@
 import QtQuick 2.0
-
+import QtQuick.Controls.Styles 1.1
+import QtQuick.Controls 1.2
 Rectangle {
 
     x: 8
@@ -7,14 +8,26 @@ Rectangle {
 
     width: 200
     height: parent.height - 16
-    color: "#efefef"
+    color: "#fefefe"
     property alias theText: stackText.text
-    Text {
+    TextArea {
         id: stackText
-        text: qsTr("text")
+
+        text: qsTr("I'm the Stack :)<br><br>")
+//        wrapMode: Text.WordWrap
+        readOnly: true
+        textFormat: TextEdit.RichText
+        verticalAlignment: Text.AlignBottom
         anchors.fill: parent
-        font.pointSize: 16
-        horizontalAlignment: Text.Center
+
+        anchors.bottomMargin: 0
+        style: TextAreaStyle{
+        backgroundColor: "#efefef"
+            textColor: "black"
+
+        }
+        font.pointSize: 12
+//        horizontalAlignment: Text.Center
         property alias fontSize: stackText.font.pointSize
     }
     MyButton{
@@ -28,7 +41,7 @@ Rectangle {
         toolTipText: "Click to zoom in"
         onButtonClicked: {
             stackText.fontSize = stackText.fontSize + 1
-            names.fontSize = names.fontSize + 1
+
         }
     }
     MyButton{
@@ -42,7 +55,7 @@ Rectangle {
         toolTipText: "Click to zoom out"
         onButtonClicked: {
             stackText.fontSize = stackText.fontSize - 1
-             names.fontSize = names.fontSize - 1
+
         }
     }
 

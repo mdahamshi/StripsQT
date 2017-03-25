@@ -8,6 +8,7 @@ import "functions.js" as MyScripts
 Item {
     id:root
     enabled: false
+    opacity: 0.5
     width: MyScripts.gridWidth
     height: MyScripts.gridHeight
     anchors.right:  parent.right
@@ -116,7 +117,7 @@ Item {
             var secPoint = MyScripts.toBoardCor(MyScripts.toBlockCor(tmpObject.x+tmpObject.width,tmpObject.y+tmpObject.height));
             myBroker.addObject(firstPoint.x,firstPoint.y,secPoint.x -1,secPoint.y-1,tmpObject.myId ,MyGlobals.desiredBoard);
         }
-        myBroker.printBoard();
+
 
 
     }

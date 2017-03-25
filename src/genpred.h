@@ -2,7 +2,9 @@
 #define GENPRED_H
 #include <iostream>
 #include <list>
-#include "broker.h"
+#include "building.h"
+#include "predicate.h"
+#include "globavars.h"
 class Genpred
 {
 public:

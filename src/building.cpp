@@ -70,7 +70,7 @@ void Building::addObject(int firstX, int firstY, int secX, int secY ,int index)
     objectsMap[index] = Furniture(topLeft ,downRight ,index);
 #ifdef _MYDEB_
 
-    printBoard();
+//    printBoard();
 #endif
 
 }
@@ -93,6 +93,14 @@ int Building::getObjectNum()
 void Building::setTatus(int i, int j, int index)
 {
     board[i][j] = index;
+}
+Building::Building(const Building &source):objectsMap(source.objectsMap)
+{
+    int i,j;
+    for(i=0 ;i < TOTAL_HEIGHT  ;i++)
+        for(j=0 ;j < TOTAL_WIDTH  ;j++)
+            board[i][j] = source.getStatus(i,j);
+
 }
 
 void Building::addDoor(int row, int col, int size ,int direction)

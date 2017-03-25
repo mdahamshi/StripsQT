@@ -1,7 +1,6 @@
 #include "genpred.h"
 
-Building &Genpred::theBuilding = Broker::getInstance()->buildingBoard;
-Building &Genpred::theGoal = Broker::getInstance()->desiredBoard;
+
 Genpred::Genpred()
 {
 
@@ -28,14 +27,15 @@ list<Predicate> Genpred::conditions()
 
             for(i=1; i < TOTAL_HEIGHT -1; i++)
                 for(j=1;j < TOTAL_WIDTH -1;j++)
-                    if(theBuilding.getStatus(i,j) == objID && theGoal.getStatus(i,j) != objID)
+                    if(buildingBoard.getStatus(i,j) == objID && desiredBoard.getStatus(i,j) != objID){
                         conditionsList.push_front(Predicate(i,j,Globals::FREE));
+                    }
             return conditionsList;
 }
 list<Genpred> Genpred::expand()
 {
     list<Genpred> conditionsList;
-    for(int i = 0 ;i < theBuilding.getObjectNum() ;i++)
+    for(int i = 0 ;i < buildingBoard.getObjectNum() ;i++)
         conditionsList.push_front(Genpred(ofOBJECT ,i+STARTID));
     return conditionsList;
 }

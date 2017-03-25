@@ -1,8 +1,8 @@
 #ifndef PREDICATE_H
 #define PREDICATE_H
 #include "globals.h"
-#include "broker.h"
-
+#include "building.h"
+#include "globavars.h"
 class Predicate
 {
 public:

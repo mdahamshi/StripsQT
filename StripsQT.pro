@@ -60,4 +60,5 @@ HEADERS += \
     src/solver.h \
     src/point.h \
     src/functions.h \
-    src/stacknode.h
+    src/stacknode.h \
+    src/globavars.h

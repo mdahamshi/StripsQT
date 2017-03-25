@@ -3,6 +3,8 @@
 #include "genpred.h"
 #include <list>
 #include <math.h>
+#include "globavars.h"
+
 class Action
 {
 public:

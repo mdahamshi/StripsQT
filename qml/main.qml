@@ -9,7 +9,7 @@ Window {
     width: 1300
     height: 700
     minimumWidth: 1200
-    minimumHeight: 600
+    minimumHeight: 650
     title: qsTr("STRIPS , Professor Lari Edition.")
 
     Item {
@@ -104,6 +104,8 @@ Window {
                         status.text = "Arrange desired state !";
                         setDesired.enabled = false;
                         opacity = 0.5;
+                        desiredBox.enabled = true;
+                        desiredBox.opacity = 1;
 
                     }
                     else
@@ -128,6 +130,40 @@ Window {
                         parent.beginTheFun();
                 }
             }
+            MyButton{
+                id: pause
+                width: 100
+                height: 50
+                customText: "<b>Pause</b>"
+                x: (parent.width ) /2 + width / 2
+                anchors.bottom: parent.bottom
+                anchors.margins: 5
+                toolTipText: "Click to pause/resume the simulation"
+                property bool toggle: false
+                visible: false
+
+                onButtonClicked: {
+                    myToggle();
+                    myBroker.togglePause();
+
+
+                }
+                function myToggle(){
+                    if(toggle){
+                        toggle = ! toggle;
+                        customText = "<b>Pause</b>";
+                    }
+                    else{
+                        toggle = ! toggle;
+                        customText = "<b>Resume</b>";
+                    }
+                }
+                function reset(){
+                    customText = "<b>Pause</b>";
+                    toggle = false;
+                    visible = false;
+                }
+            }
 
             MyButton{
                 id: quit
@@ -141,7 +177,9 @@ Window {
                 toolTipText:"Click to Quit"
 
                 onButtonClicked: {
+                    status.text = "Please wait ..."
                     myBroker.setResetReq();
+                    myBroker.togglePause();
                        Qt.quit();
                 }
             }
@@ -193,11 +231,28 @@ Window {
                     MyScripts.updateBoard();
 
                 }
+                onUpdateCurrent:{
+                    MyScripts.updateCurrentBoard();
+                }
+
                 onResetAll:{
                     resetVars();
+                    pause.reset();
                 }
                 onUpdateStack:{
                     stripsStack.theText = str;
+
+                }
+                onSolved:{
+                    status.text = "Solved successfully !"
+
+                    MyScripts.updateCurrentBoard();
+                    pause.reset();
+
+                }
+                onNoSol:{
+                    status.text = "No solution found !"
+                    pause.reset();
 
                 }
             }
@@ -222,7 +277,9 @@ Window {
                 setDesired.enabled = true;
                 setDesired.opacity = 1;
                 desiredBox.enabled = true;
+                desiredBox.opacity = 0.5;
                 begin.enabled = true;
+                pause.reset();
                 begin.opacity = 1;
             }
             function beginTheFun(){
@@ -232,12 +289,13 @@ Window {
                 currentBox.opacity = 1;
                 begin.enabled = false;
                 begin.opacity = 0.5;
+                pause.visible = true;
                 myBroker.beginSolving();
             }
 
             Component.onCompleted: {
                 currentBox.enabled = true;
-                desiredBox.enabled = true;
+
 //                console.log(myBroker.getBoardSize());
                 MyScripts.updateBoard();
 

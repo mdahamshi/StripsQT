@@ -5,11 +5,11 @@
 #include <QQuickItem>
 #include <QQmlEngine>
 #include <stack>
-#include "building.h"
 #include "stacknode.h"
 #include <list>
-
-//#include "functions.h"
+#include <qstring.h>
+#include "globavars.h"
+#include "functions.h"
 #include <qstack.h>
 #ifndef _MYDEB_
 #define _MYDEB_
@@ -18,10 +18,7 @@
 
 #include <QTime>
 
-extern Building buildingBoard = Building();
-extern Building desiredBoard = Building();
-extern std::stack<StackNode> strips = std::stack<StackNode>();
-extern std::list<Predicate> keep_Predicates = std::list<Predicate>();
+
 
 class Broker: public  QObject
 {
@@ -31,10 +28,14 @@ private:
     static  Broker *  m_Instance;
 
     int objectsNum;
+    int speed;
+    list <Action> done_actions;
+    list <Predicate> todo_predicates;
+    int movingobjs[256]={0};
+    Action lastact;
 
 public:
-    Building &buildingBoard = buildingBoard;
-    Building &desiredBoard = desiredBoard;
+
     QStack<QString> stack;
     static void declareQML() {
         qmlRegisterType<Broker>("strips", 1, 0, "Broker");
@@ -55,11 +56,21 @@ public:
     Q_INVOKABLE void printBoard(){desiredBoard.printBoard();}
     Q_INVOKABLE void beginSolving();
     Q_INVOKABLE void setResetReq();
-    void delay();
+    Q_INVOKABLE void togglePause();
+    int solveRec();
+    void DisplaySTRIPS();
+    void delay(int);
+    int getSpeed() const;
+    void setSpeed(int value);
+
 signals:
     void updateBuilding();
     void resetAll();
     void updateStack(QString str);
+    void solved();
+    void noSol();
+    void updateCurrent();
+
 
 };
 
