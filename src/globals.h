@@ -13,6 +13,7 @@
 #define ofROOM (1)
 #define ofOBJECT (2)
 #define STARTID (3)
+
 //action types
 #define MOVE_RIGHT 1
 #define MOVE_LEFT 6
@@ -26,6 +27,25 @@
 #define ACTION 3
 #define GENERAL_PREDICATE 4
 #define GENERAL_PREDICATE_CONJUNCTION 5
+/*
+ **********************************
+ *          *                     *
+ *   5x8                          *
+ *  first   *                     *
+ *          *                     *
+ ***     ****                     *
+ *          *      13x12          *
+ *                                *
+ * second          third          *
+ *  7x8     *                     *
+ *          *                     *
+ **********************************
+ */
+//roams
+#define FIRST_ROAM (1)
+#define SECOND_ROAM (2)
+#define THIRD_ROAM (3)
+
 
 #define _MYDEB_
 

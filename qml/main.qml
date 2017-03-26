@@ -106,6 +106,8 @@ Window {
                         opacity = 0.5;
                         desiredBox.enabled = true;
                         desiredBox.opacity = 1;
+                        begin.enabled = true;
+                        begin.opacity = 1;
 
                     }
                     else
@@ -122,7 +124,8 @@ Window {
                 anchors.bottom: parent.bottom
                 anchors.margins: 5
                 toolTipText: "Click to begin simulation"
-
+                enabled: false
+                opacity: 0.5
                 onButtonClicked: {
                     if(setDesired.enabled === true)
                         status.text = "Add some Objects !"
@@ -281,6 +284,8 @@ Window {
                 begin.enabled = true;
                 pause.reset();
                 begin.opacity = 1;
+                begin.enabled = false;
+                begin.opacity = 0.5;
             }
             function beginTheFun(){
                 status.text = "Here we Go !<br/>We are now stripping things for you :)"

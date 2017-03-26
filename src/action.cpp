@@ -272,6 +272,6 @@ bool Action::doit()
     default:
         break;
     }
-
+    buildingBoard.updateRoam(buildingBoard.objectsMap[objID]);
     return true;
 }

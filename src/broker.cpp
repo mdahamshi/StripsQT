@@ -6,6 +6,7 @@ Building buildingBoard = Building();
 Building desiredBoard = Building();
 std::stack<StackNode> strips = std::stack<StackNode>() ;
 std::list<Predicate> keep_predicates = std::list<Predicate>();
+bool foundWall = false;
 Broker* Broker::m_Instance = NULL;
 Broker::Broker(QObject *parent) : QObject(parent)
 {
@@ -38,6 +39,12 @@ Broker::Broker()
 
     buildingBoard.initializeBoard();
     desiredBoard.initializeBoard();
+    Building::firstRoam.setFirstDoor(Door(Point(6,3),Point(6,6)));
+    Building::firstRoam.setSecondDoor(Door(Point(2,9),Point(4,9)));
+    Building::secondRoam.setFirstDoor(Door(Point(6,3),Point(6,6)));
+    Building::secondRoam.setSecondDoor(Door(Point(8,9),Point(12,9)));
+    Building::thirdRoam.setFirstDoor(Door(Point(2,9),Point(4,9)));
+    Building::thirdRoam.setSecondDoor(Door(Point(8,9),Point(12,9)));
     speed = 5;
     objectsNum = 0;
     stack.push("hello");
@@ -144,7 +151,7 @@ int  Broker::solveRec()
     std::stack<StackNode> tempstack=std::stack<StackNode>(strips);
     static int count=0;
     Building tmpBoard = Building(buildingBoard);
-    int k2,notonobj=0,i;
+    int k2,notonobj=0,i,lastAct=-1;
     count++;
     std::cout<<"****rec call: "<<count<<std::endl;
     Predicate pred;
@@ -205,16 +212,23 @@ int  Broker::solveRec()
             }
             todo_predicates.insert(todo_predicates.end(), pred); // now handling this predicate.
             int a=buildingBoard.getStatus(pred.xpos,pred.ypos);	// a is the object at the position we need to clear.
-            if(a==Globals::WALL)
+            if(a==Globals::WALL){
+                foundWall = true;
                 return Globals::NOSOL;	// can't clear walls.
-            for(int h=1; h<7; h++,notonobj=-1) {	// try each of 6 operators/actions
-                i=operation_rank(h,a);	// i is the most suitable, still-untried, operation
-                if(!(done_actions.empty())){
-                    list<Action>::iterator acts=done_actions.end();
-                    acts--;
-                    if((*acts).type==7-i)	// last done action was the opposite of this action
-                        notonobj=acts->objID;	// then don't do the operation on the same object
-                }
+            }
+            else{
+                foundWall = false;
+            }
+
+            for(int h=1; h<7; h++,notonobj=-1 ,lastAct = i) {	// try each of 6 operators/actions
+
+                i=operation_rank(h,a,lastAct);	// i is the most suitable, still-untried, operation
+//                if(!(done_actions.empty())){
+//                    list<Action>::iterator acts=done_actions.end();
+//                    acts--;
+//                    if((*acts).type==lastAct)	// last done action was the opposite of this action
+//                        notonobj=acts->objID;	// then don't do the operation on the same object
+//                }
 
                         if(a==notonobj || movingobjs[a]==1){	// can't move this object
                             std::cout<<"will now continue...\n";
@@ -429,7 +443,7 @@ void Broker::DisplaySTRIPS()
         }
 
         str += "<br/>--------------------------<br>";
-        str += "*STACK FIRST CELL*<br/>";
+        str += "*STACK FIRST CELL*<br/><br/><br/>";
 #ifdef _MYDEB_
                                     std::cout<<"----------------------"<<std::endl;
                                     std::cout<<str<<std::endl;

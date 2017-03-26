@@ -14,7 +14,9 @@ SOURCES += src/main.cpp \
     src/solver.cpp \
     src/point.cpp \
     src/functions.cpp \
-    src/stacknode.cpp
+    src/stacknode.cpp \
+    src/roam.cpp \
+    src/door.cpp
 
 RESOURCES += qml.qrc
 
@@ -61,4 +63,6 @@ HEADERS += \
     src/point.h \
     src/functions.h \
     src/stacknode.h \
-    src/globavars.h
+    src/globavars.h \
+    src/roam.h \
+    src/door.h

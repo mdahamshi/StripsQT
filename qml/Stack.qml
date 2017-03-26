@@ -18,6 +18,7 @@ Rectangle {
         readOnly: true
         textFormat: TextEdit.RichText
         verticalAlignment: Text.AlignBottom
+        horizontalAlignment: Text.Center
         anchors.fill: parent
 
         anchors.bottomMargin: 0

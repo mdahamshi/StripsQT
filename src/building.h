@@ -1,7 +1,7 @@
 #ifndef BUILDING_H
 #define BUILDING_H
 #include "globals.h"
-#include "furniture.h"
+#include "roam.h"
 #include <iomanip>
 #include <iostream>
 #include <list>
@@ -10,17 +10,20 @@ using namespace std;
 
 
 
+
 class Building
 {
 
 public:
     int board[TOTAL_HEIGHT][TOTAL_WIDTH];
+    static Roam firstRoam,secondRoam,thirdRoam;
 
     std::map <int,Furniture> objectsMap;
 
     void initializeBoard();
     Building(const Building &source);
     void printBoard();
+    void updateRoam(Furniture &object);
     int getObjectNum();
     void addDoor(int row ,int col ,int size ,int direction);
     int getStatus(int i, int j) const{return board[i][j];}

@@ -4,15 +4,17 @@
 #include "point.h"
 class Furniture
 {
-private:
+protected:
     Point topLeft;
     Point downRight;
     int colorIndex;   //also an id
+    int roam;
 public:
 
     Furniture();
     Furniture(const Furniture& source);
     Furniture(Point,Point,int);
+    Furniture(Point,Point,int,int);
     int getWidth();
     int getHeight();
     Point getTopLeftPoint();
@@ -20,6 +22,9 @@ public:
     void setTopLeftPoint(int x ,int y);
     void setDownRightPoint(int x ,int y);
     void print();
+    int getRoam() const;
+    int getId(){return colorIndex;}
+    void setRoam(int value);
 };
 
 #endif // FURNITURE_H
