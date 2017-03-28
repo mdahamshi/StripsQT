@@ -11,7 +11,6 @@ SOURCES += src/main.cpp \
     src/predicate.cpp \
     src/genpred.cpp \
     src/action.cpp \
-    src/solver.cpp \
     src/point.cpp \
     src/functions.cpp \
     src/stacknode.cpp \

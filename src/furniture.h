@@ -9,6 +9,7 @@ protected:
     Point downRight;
     int colorIndex;   //also an id
     int roam;
+    int lastAct;
 public:
 
     Furniture();
@@ -25,6 +26,8 @@ public:
     int getRoam() const;
     int getId(){return colorIndex;}
     void setRoam(int value);
+    int getLastAct() const;
+    void setLastAct(int value);
 };
 
 #endif // FURNITURE_H

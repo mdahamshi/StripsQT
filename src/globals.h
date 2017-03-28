@@ -27,6 +27,7 @@
 #define ACTION 3
 #define GENERAL_PREDICATE 4
 #define GENERAL_PREDICATE_CONJUNCTION 5
+extern bool disablFir ;
 /*
  **********************************
  *          *                     *
@@ -45,7 +46,24 @@
 #define FIRST_ROAM (1)
 #define SECOND_ROAM (2)
 #define THIRD_ROAM (3)
-
+/*
+ **********************************
+ *          *                     *
+ *   5x8   sec                    *
+ *          *                     *
+ ****first***                     *
+ *          *      13x12          *
+ *          *                     *
+ *  7x8     *                     *
+ *        third                   *
+ *          *                     *
+ *          *                     *
+ **********************************
+ */
+//doors
+#define FIRST_DOOR (1)
+#define SECOND_DOOR (2)
+#define THIRD_DOOR (3)
 
 #define _MYDEB_
 

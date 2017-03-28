@@ -2,6 +2,7 @@
 #define BUILDING_H
 #include "globals.h"
 #include "roam.h"
+
 #include <iomanip>
 #include <iostream>
 #include <list>
@@ -17,10 +18,13 @@ class Building
 public:
     int board[TOTAL_HEIGHT][TOTAL_WIDTH];
     static Roam firstRoam,secondRoam,thirdRoam;
+    static Door firstDoor,secondDoor,thirdDoor;
 
     std::map <int,Furniture> objectsMap;
-
+    bool clear(Furniture object,int direction);
     void initializeBoard();
+    bool doorIsClear(int door);
+    bool clearRange(Point a, Point b);
     Building(const Building &source);
     void printBoard();
     void updateRoam(Furniture &object);
@@ -32,6 +36,7 @@ public:
     void addObject(int firstX ,int firstY ,int secX ,int secY ,int index );
     void printObjects();
     Building();
+    int objectAtDoor(int objID);
 };
 
 #endif // BUILDING_H

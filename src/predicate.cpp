@@ -37,9 +37,9 @@ void Predicate::set(int x ,int y ,int id)
 void Predicate::print()
 {
         if (objID == Globals::WALL)
-            std::cout<<"Wall(["<<xpos<<","<<ypos<<"])";
+            //std::cout<<"Wall(["<<xpos<<","<<ypos<<"])";
         if(objID == Globals::FREE)
-            std::cout<<"Clear(["<<xpos<<","<<ypos<<"])";
+            //std::cout<<"Clear(["<<xpos<<","<<ypos<<"])";
         else
-            std::cout<<"At("<<objID<<", ["<<xpos<<","<<ypos<<"])";
+            //std::cout<<"At("<<objID<<", ["<<xpos<<","<<ypos<<"])";
 }

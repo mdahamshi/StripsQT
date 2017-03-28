@@ -68,6 +68,7 @@ signals:
     void resetAll();
     void updateStack(QString str);
     void solved();
+    void updateState(std::string msg);
     void noSol();
     void updateCurrent();
 

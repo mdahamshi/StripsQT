@@ -234,8 +234,13 @@ Window {
                     MyScripts.updateBoard();
 
                 }
+                onUpdateState:{
+                    status.text = "Rotation failed, restoring board...";
+                }
+
                 onUpdateCurrent:{
                     MyScripts.updateCurrentBoard();
+                     status.text = "Here we Go !<br/>We are now stripping things for you :)"
                 }
 
                 onResetAll:{
