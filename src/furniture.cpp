@@ -10,6 +10,16 @@ void Furniture::setRoam(int value)
     roam = value;
 }
 
+int Furniture::getLastAct() const
+{
+    return lastAct;
+}
+
+void Furniture::setLastAct(int value)
+{
+    lastAct = value;
+}
+
 Furniture::Furniture()
 {
 
@@ -41,6 +51,8 @@ Furniture::Furniture(const Furniture &source)
     this->colorIndex = source.colorIndex;
     this->downRight = source.downRight;
     this->topLeft = source.topLeft;
+    this->roam = source.roam;
+    this->lastAct = source.lastAct;
 }
 void Furniture::setTopLeftPoint(int x, int y)
 {

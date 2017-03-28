@@ -10,8 +10,8 @@ class Action
 public:
     static Building &theBuilding;
     static Building &theGoal;
-    int type ,objID;
-    Action(int,int);
+    int type ,objID ,steps;
+    Action(int,int,int);
     Action(const Action &source);
     bool operator==(const Action &source);
     list<Predicate> PreConditions();

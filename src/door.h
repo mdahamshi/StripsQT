@@ -4,11 +4,15 @@
 
 class Door : public Furniture
 {
-public:
+private:
     int size;
+    int type;
+public:
+
     Door();
     Door(Point a ,Point b );
     int getSize();
+    int getType() const;
 };
 
 #endif // DOOR_H
