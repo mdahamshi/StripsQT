@@ -5,6 +5,7 @@
 
 #include <iomanip>
 #include <iostream>
+#include <math.h>
 #include <list>
 #include <map>
 using namespace std;
@@ -29,8 +30,12 @@ public:
     void printBoard();
     void updateRoam(Furniture &object);
     int getObjectNum();
+    int euc_dis(int,int,int,int);
     void addDoor(int row ,int col ,int size ,int direction);
-    int getStatus(int i, int j) const{return board[i][j];}
+    int getStatus(int i, int j) const{
+        if(i < 1 || i > TOTAL_HEIGHT-1 || j < 1 || j > TOTAL_WIDTH-1)
+            return Globals::WALL;
+        return board[i][j];}
     void setTatus(int i ,int j ,int index);
     int getBoardSize(){return TOTAL_HEIGHT * TOTAL_WIDTH;}
     void addObject(int firstX ,int firstY ,int secX ,int secY ,int index );

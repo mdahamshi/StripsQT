@@ -8,8 +8,7 @@
 class Action
 {
 public:
-    static Building &theBuilding;
-    static Building &theGoal;
+
     int type ,objID ,steps;
     Action(int,int,int);
     Action(const Action &source);

@@ -68,7 +68,7 @@ void Furniture::setDownRightPoint(int x, int y)
 void Furniture::print()
 {
     //std::cout<<"Furnituer: id= "<<colorIndex<<" x1,y1 "<<topLeft.x<<","<<topLeft.y<<" x2,y2 "<<downRight.x<<","<<downRight.y
-            <<" width: "<<getWidth()<<" height: "<<getHeight()<<" . roamid:"<<getRoam()<<std::endl;
+//            <<" width: "<<getWidth()<<" height: "<<getHeight()<<" . roamid:"<<getRoam()<<std::endl;
 }
 
 Point Furniture::getTopLeftPoint()

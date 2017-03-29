@@ -38,8 +38,8 @@ void Predicate::print()
 {
         if (objID == Globals::WALL)
             //std::cout<<"Wall(["<<xpos<<","<<ypos<<"])";
-        if(objID == Globals::FREE)
-            //std::cout<<"Clear(["<<xpos<<","<<ypos<<"])";
-        else
+        if(objID == Globals::FREE);
+            //std::cout<<"Clear(["<<x;pos<<","<<ypos<<"])";
+//        else
             //std::cout<<"At("<<objID<<", ["<<xpos<<","<<ypos<<"])";
 }

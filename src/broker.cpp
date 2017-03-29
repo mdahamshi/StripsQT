@@ -205,8 +205,10 @@ int  Broker::solveRec()
                 }
                 todo_predicates.insert(todo_predicates.end(), pred); // now handling this predicate.
                 int a=buildingBoard.getStatus(pred.xpos,pred.ypos);	// a is the object at the position we need to clear.
-                if(a==Globals::WALL)
+                if(a==Globals::WALL){
+                    disablFir = false;
                     return Globals::NOSOL;	// can't clear walls.
+                }
                 firstHur = true;
                 for(int h=1; h<7; h++,notonobj=-1){	// try each of 6 operators/actions
 
@@ -246,7 +248,7 @@ int  Broker::solveRec()
                                 k=8;	// no steps in rotations.
                             act=Action(i,a,k);	// act is the chosen operation
                             list<Predicate> goals=act.Goals();
-                            if(findInList(pred, goals) || firstHur){	// the action causes the desired predicate
+                            if(findInList(pred, goals) || firstHur || true){	// the action causes the desired predicate
                                 if(IsInCommon(act.Deletions(), keep_predicates))
                                     continue;	// delets a desired predicate
                                 movingobjs[a]=1;	// note this object is being moved, don't move it by another op.
@@ -278,7 +280,7 @@ int  Broker::solveRec()
 
                                     buildingBoard = Building(tempboard);
                                     k=8;	// if couldn't move k steps, you can't move >k steps.
-                                    if(act.type==ROTATE_RIGHT){	// try a combination.
+                                    if(act.type==ROTATE_RIGHT || act.type==ROTATE_LEFT){	// try a combination.
                                         k2=1;	// move k2 steps up then rotate right!
                                         do{
                                             disablFir = true;
@@ -300,23 +302,41 @@ int  Broker::solveRec()
                                             next.conj=preconds;
                                             Keep(preconds);
                                             strips.push(next);
+
+                                            act=Action(MOVE_RIGHT,a,buildingBoard.objectsMap[a].getHeight());
+                                            next=StackNode(ACTION);
+                                            next.action=Action(act);
+                                            strips.push(next);
                                             DisplaySTRIPS();
                                             delay(20*speed);
+                                            next=StackNode(CONJUNCTION);
+                                            preconds=act.PreConditions();
+                                            next.conj=preconds;
+                                            Keep(preconds);
+                                            strips.push(next);
+
+
+                                            DisplaySTRIPS();
+                                            delay(20*speed);
+
                                             if(solveRec()){	// move_up_k2 succeeded
-                                                keep_predicates=tempkeeppreds;
-                                                act=Action(ROTATE_RIGHT,a,1);
-                                                next=StackNode(ACTION);
-                                                next.action=Action(act);
-                                                strips.push(next);
-                                                DisplaySTRIPS();
                                                 delay(20*speed);
-                                                next=StackNode(CONJUNCTION);
-                                                list<Predicate> preconds=act.PreConditions();
-                                                next.conj=preconds;
-                                                Keep(preconds);
-                                                strips.push(next);
-                                                DisplaySTRIPS();
-                                                delay(20*speed);
+                                                if(solveRec()){
+                                                    keep_predicates=tempkeeppreds;
+                                                    act=Action(ROTATE_RIGHT,a,1);
+                                                    next=StackNode(ACTION);
+                                                    next.action=Action(act);
+                                                    strips.push(next);
+                                                    DisplaySTRIPS();
+                                                    delay(20*speed);
+                                                    next=StackNode(CONJUNCTION);
+                                                    list<Predicate> preconds=act.PreConditions();
+                                                    next.conj=preconds;
+                                                    Keep(preconds);
+                                                    strips.push(next);
+                                                    DisplaySTRIPS();
+                                                    delay(20*speed);
+                                                }
                                             }
                                             else	// move_up failed, stop do-while loop
                                                 k2=8;
@@ -397,6 +417,7 @@ int  Broker::solveRec()
             default:
                 break;
         }
+        disablFir = false;
         return Globals::NOSOL;
 }
 void Broker::DisplaySTRIPS()

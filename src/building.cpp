@@ -60,6 +60,10 @@ void Building::initializeBoard()
 
 
 }
+int Building::euc_dis(int x1, int y1, int x2, int y2)
+{
+    return floor(sqrt((double)(x1-x2)*(x1-x2)+(y1-y2)*(y1-y2)));
+}
 
 void Building::addObject(int firstX, int firstY, int secX, int secY ,int index)
 {
@@ -130,6 +134,10 @@ bool Building::clear(Furniture object, int direction)
 {
     int objUpX = object.getTopLeftPoint().x ,objUpY = object.getTopLeftPoint().y
             ,objDownX = object.getDownRightPoint().x ,objDownY = object.getDownRightPoint().y;
+    int i,j;
+    int l=objDownY-objUpY;
+    int w=objDownX-objUpX;
+    int R=floor(sqrt((double)(w+1)*(w+1)+(l+1)*(l+1)))+1;
     switch (direction) {
     case MOVE_DOWN:
         return clearRange(Point(objDownX+1,objUpY),Point(objDownX+1,objDownY));
@@ -140,6 +148,28 @@ bool Building::clear(Furniture object, int direction)
         return clearRange(Point(objUpX,objDownY+1),Point(objDownX,objDownY+1));
     case MOVE_LEFT:
         return clearRange(Point(objUpX,objUpY -1),Point(objDownX,objUpY - 1));
+    case ROTATE_RIGHT:
+        for(i=objDownX; i>=objUpX; i--)
+            for(j=objUpY-1; j>=objUpY-w-1; j--)
+                if(euc_dis(objUpX, objUpY, i, j)<R)
+                    if(board[i][j] != Globals::FREE && board[i][j] != object.getId())
+                        return false;
+        for(i=objUpX+R+1; i>=objDownX+1; i--)
+            for(j=objDownY; j>=objUpY-w-1; j--)
+                if(euc_dis(objUpX, objUpY, i, j)<R)
+                    if(board[i][j] != Globals::FREE && board[i][j] != object.getId())
+                        return false;
+    case ROTATE_LEFT:
+        for(i=objDownX; i>=objUpX-l; i--)
+            for(j=objUpY+R; j>=objDownY+1; j--)
+                if(euc_dis(objUpX, objUpY, i, j)<R)
+                    if(board[i][j] != Globals::FREE && board[i][j] != object.getId())
+                        return false;
+        for(i=objUpX-1; i>=objUpX-l-1; i--)
+            for(j=objDownY+w; j>=objUpY; j--)
+                if(euc_dis(objUpX, objUpY, i, j)<R)
+                    if(board[i][j] != Globals::FREE && board[i][j] != object.getId())
+                        return false;
     default:
         break;
     }
@@ -202,6 +232,8 @@ int Building::getObjectNum()
 }
 void Building::setTatus(int i, int j, int index)
 {
+    if(i < 1 || i > TOTAL_HEIGHT-1 || j < 1 || j > TOTAL_WIDTH-1)
+        return;
     board[i][j] = index;
 }
 Building::Building(const Building &source):objectsMap(source.objectsMap)
