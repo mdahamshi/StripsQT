@@ -24,5 +24,5 @@ You can <b>download</b> a portable version and test it from here : <a href="http
 ![alt tag](https://github.com/mdahamshi/StripsQT/blob/master/screenshots/3.png)
 ![alt tag](https://github.com/mdahamshi/StripsQT/blob/master/screenshots/4.png)
 ![alt tag](https://github.com/mdahamshi/StripsQT/blob/master/screenshots/5.png)
-![alt tag](https://github.com/mdahamshi/StripsQT/blob/withoutCout/screenshots/6.png)
+![alt tag](https://github.com/mdahamshi/StripsQT/blob/master/screenshots/6.png)
 <br/>
